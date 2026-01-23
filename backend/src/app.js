@@ -13,3 +13,9 @@ app.get('/', (req, res) => {
 });
 
 module.exports = app;
+
+const db = require('./database');
+
+db.query('SELECT 1')
+  .then(() => console.log('Banco conectado'))
+  .catch(err => console.error(err));
