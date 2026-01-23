@@ -1,0 +1,5 @@
+CREATE TABLE anonymous_searches (
+  id SERIAL PRIMARY KEY,
+  ip_address VARCHAR(50) NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
