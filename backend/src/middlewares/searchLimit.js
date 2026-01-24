@@ -1,39 +1,15 @@
-const db = require('../database');
+let requests = 0;
 
-module.exports = async (req, res, next) => {
-  const user = req.user; // futuro JWT
-  const ip = req.ip;
+function searchLimit(req, res, next) {
+  requests++;
 
-  // Usuário autenticado não tem limite
-  if (user) {
-    return next();
+  if (requests > 10) {
+    return res.status(429).json({
+      error: "Limite de buscas excedido",
+    });
   }
 
-  try {
-    const { rows } = await db.query(
-      `SELECT COUNT(*) FROM anonymous_searches
-       WHERE ip_address = $1
-       AND created_at::date = CURRENT_DATE`,
-      [ip]
-    );
+  next();
+}
 
-    const searchCount = Number(rows[0].count);
-
-    if (searchCount >= 3) {
-      return res.status(403).json({
-        message: 'Limite de 3 buscas atingido. Faça login para continuar.'
-      });
-    }
-
-    // Registra a busca
-    await db.query(
-      'INSERT INTO anonymous_searches (ip_address) VALUES ($1)',
-      [ip]
-    );
-
-    next();
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Erro ao validar limite de buscas' });
-  }
-};
+module.exports = searchLimit;
