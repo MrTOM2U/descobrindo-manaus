@@ -1,15 +1,20 @@
-let requests = 0;
+const searches = {};
 
-function searchLimit(req, res, next) {
-  requests++;
+module.exports = (req, res, next) => {
+  // Usuário logado → sem limite
+  if (req.userId) {
+    return next();
+  }
 
-  if (requests > 10) {
-    return res.status(429).json({
-      error: "Limite de buscas excedido",
+  const ip = req.ip;
+  searches[ip] = searches[ip] || 0;
+
+  if (searches[ip] >= 3) {
+    return res.status(403).json({
+      error: "Limite de 3 buscas atingido. Faça login para continuar."
     });
   }
 
+  searches[ip]++;
   next();
-}
-
-module.exports = searchLimit;
+};

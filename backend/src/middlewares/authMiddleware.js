@@ -1,17 +1,29 @@
-function authMiddleware(req, res, next) {
+const jwt = require("jsonwebtoken");
+
+module.exports = (req, res, next) => {
   const authHeader = req.headers.authorization;
 
+  // Usuário NÃO logado → segue sem erro
   if (!authHeader) {
-    return res.status(401).json({ error: "Token não fornecido" });
+    return next();
   }
 
-  const [, token] = authHeader.split(" ");
+  const parts = authHeader.split(" ");
 
-  if (token !== "JWT_TESTE") {
-    return res.status(401).json({ error: "Token inválido" });
+  if (parts.length !== 2) {
+    return next();
   }
 
-  next();
-}
+  const [scheme, token] = parts;
 
-module.exports = authMiddleware;
+  if (scheme !== "Bearer") {
+    return next();
+  }
+
+  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    if (!err) {
+      req.userId = decoded.id;
+    }
+    return next();
+  });
+};

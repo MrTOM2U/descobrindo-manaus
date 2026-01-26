@@ -1,7 +1,13 @@
-import Login from "./pages/Login/Login";
+import Header from './components/Header';
+import AppRoutes from './routes';
 
 function App() {
-  return <Login />;
+  return (
+    <>
+      <Header />
+      <AppRoutes />
+    </>
+  );
 }
 
 export default App;

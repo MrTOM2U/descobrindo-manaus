@@ -1,17 +1,21 @@
-import { useState } from 'react';
-import api from '../services/api';
+import { useState } from "react";
+import api from "../../services/api";
+import UserStatus from "../../components/UserStatus";
 
 function Home() {
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   async function handleSearch() {
-    setError('');
+    setError("");
     setResults([]);
+    setLoading(true);
 
     if (!query) {
-      setError('Digite algo para buscar');
+      setError("Digite algo para buscar");
+      setLoading(false);
       return;
     }
 
@@ -20,25 +24,30 @@ function Home() {
       setResults(response.data);
     } catch (err) {
       if (err.response) {
-        setError(err.response.data.error || 'Erro na busca');
+        setError(err.response.data.error);
       } else {
-        setError('Erro ao conectar com o servidor');
+        setError("Erro ao conectar com o servidor");
       }
+    } finally {
+      setLoading(false);
     }
   }
 
   return (
     <div>
+      <UserStatus />
+
       <h2>Descobrindo Manaus</h2>
 
       <input
-        type="text"
-        placeholder="Buscar restaurantes, bares, pontos turísticos..."
         value={query}
         onChange={(e) => setQuery(e.target.value)}
+        placeholder="Buscar restaurantes, bares, pontos turísticos..."
       />
 
-      <button onClick={handleSearch}>Buscar</button>
+      <button onClick={handleSearch}>
+        {loading ? "Buscando..." : "Buscar"}
+      </button>
 
       {error && <p>{error}</p>}
 
