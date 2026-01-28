@@ -6,17 +6,10 @@ const searchRoutes = require("./routes/search.routes");
 
 const app = express();
 
-app.use(cors({
-  origin: "http://localhost:5173"
-}));
-
+app.use(cors());
 app.use(express.json());
 
 app.use("/auth", authRoutes);
-app.use("/search", searchRoutes);
-
-app.get("/", (req, res) => {
-  res.json({ message: "API Descobrindo Manaus rodando!" });
-});
+app.use(searchRoutes);
 
 module.exports = app;

@@ -1,15 +1,15 @@
-import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../contexts/AuthContext";
 
-function LogoutButton() {
-  const navigate = useNavigate();
+export default function LogoutButton() {
+  const { logout } = useContext(AuthContext);
 
   function handleLogout() {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    navigate("/login");
+    const confirmLogout = window.confirm("Deseja realmente sair?");
+    if (confirmLogout) {
+      logout();
+    }
   }
 
   return <button onClick={handleLogout}>Sair</button>;
 }
-
-export default LogoutButton;

@@ -1,8 +1,10 @@
-import { useState } from "react";
-import api from "../../services/api";
-import UserStatus from "../../components/UserStatus";
+import { useContext, useState } from "react";
+import { AuthContext } from "../../contexts/AuthContext";
+import { api } from "../../services/api";
+import LogoutButton from "../../components/LogoutButton";
 
 function Home() {
+  const { isAuthenticated } = useContext(AuthContext);
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
   const [error, setError] = useState("");
@@ -10,24 +12,13 @@ function Home() {
 
   async function handleSearch() {
     setError("");
-    setResults([]);
     setLoading(true);
-
-    if (!query) {
-      setError("Digite algo para buscar");
-      setLoading(false);
-      return;
-    }
 
     try {
       const response = await api.get(`/search?q=${query}`);
       setResults(response.data);
-    } catch (err) {
-      if (err.response) {
-        setError(err.response.data.error);
-      } else {
-        setError("Erro ao conectar com o servidor");
-      }
+    } catch {
+      setError("Erro na busca");
     } finally {
       setLoading(false);
     }
@@ -35,17 +26,17 @@ function Home() {
 
   return (
     <div>
-      <UserStatus />
-
       <h2>Descobrindo Manaus</h2>
+
+      {isAuthenticated && <LogoutButton />}
 
       <input
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        placeholder="Buscar restaurantes, bares, pontos turísticos..."
+        placeholder="Buscar lugares..."
       />
 
-      <button onClick={handleSearch}>
+      <button onClick={handleSearch} disabled={loading}>
         {loading ? "Buscando..." : "Buscar"}
       </button>
 
@@ -54,7 +45,7 @@ function Home() {
       <ul>
         {results.map((item, index) => (
           <li key={index}>
-            <strong>{item.name}</strong> — {item.category}
+            {item.name} — {item.category}
           </li>
         ))}
       </ul>

@@ -1,34 +1,22 @@
-import { useNavigate } from 'react-router-dom';
-import { logout } from '../services/auth';
+import { useContext } from "react";
+import { AuthContext } from "../contexts/AuthContext";
+import { Link } from "react-router-dom";
+import LogoutButton from "./LogoutButton";
 
 function Header() {
-  const navigate = useNavigate();
-  const user = JSON.parse(localStorage.getItem('user'));
-
-  function handleLogout() {
-    logout();
-    navigate('/login');
-  }
+  const { user, isAuthenticated } = useContext(AuthContext);
 
   return (
-    <header
-      style={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        padding: '12px 20px',
-        borderBottom: '1px solid #ddd',
-      }}
-    >
-      <strong>Descobrindo Manaus</strong>
+    <header style={{ marginBottom: 20 }}>
+      <h3>Descobrindo Manaus</h3>
 
-      {user && (
+      {isAuthenticated ? (
         <div>
-          <span style={{ marginRight: '12px' }}>
-            Olá, {user.name}
-          </span>
-          <button onClick={handleLogout}>Logout</button>
+          <span>Olá, {user.name}</span>{" "}
+          <LogoutButton />
         </div>
+      ) : (
+        <Link to="/login">Fazer login</Link>
       )}
     </header>
   );

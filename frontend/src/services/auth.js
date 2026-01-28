@@ -1,4 +1,8 @@
-export function logout() {
-  localStorage.removeItem("token");
-  localStorage.removeItem("user");
+import { api } from "./api";
+
+export function loginRequest(email, password) {
+  return api.post("/auth/login", {
+    email,
+    password,
+  });
 }

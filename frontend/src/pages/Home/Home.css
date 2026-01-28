@@ -1,0 +1,52 @@
+.home-container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 24px;
+  background: #fff;
+  border-radius: 8px;
+}
+
+.home-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.home-header h2 {
+  font-size: 20px;
+}
+
+.logout-btn {
+  background: #dc2626;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.search-box {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.search-box input {
+  flex: 1;
+  padding: 8px;
+}
+
+.search-box button {
+  padding: 8px 16px;
+}
+
+.result-item {
+  padding: 12px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.empty {
+  text-align: center;
+  color: #6b7280;
+}
