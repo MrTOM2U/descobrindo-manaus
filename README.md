@@ -1,24 +1,57 @@
-# Descobrindo Manaus
+# Descobrindo Lugares
 
-Aplicação web e mobile responsiva para ajudar moradores, turistas e visitantes a encontrarem lugares para comer, beber e tirar boas fotos em Manaus.
+Aplicação full stack para descoberta de lugares (bares, restaurantes, pontos turísticos),
+com autenticação JWT e limitação de buscas para usuários não autenticados.
 
-## Objetivo
-Projeto educacional e de portfólio com foco em boas práticas, arquitetura moderna e impacto real para usuários.
+🚧 **Projeto em desenvolvimento** 🚧
 
-## Tecnologias
-- JavaScript
+---
+
+## 🧱 Stack
+
+### Backend
 - Node.js
 - Express
-- ReactJS
-- PostgreSQL
-- HTML5, CSS3
-- Git e GitHub
+- SQLite
+- JWT (jsonwebtoken)
+- bcryptjs
+- CORS
 
-## Funcionalidades
-- Busca por texto e voz
-- Filtro por faixa de preço
-- Limite de uso para usuários não autenticados
-- Login com Google ou conta própria
+### Frontend
+- React (Vite)
+- React Router DOM
+- Axios
+- Context API
 
-## Status
-🚧 Em desenvolvimento
+---
+
+## 🔐 Funcionalidades já implementadas
+
+- Login real com JWT
+- Persistência de sessão (localStorage)
+- Interceptor global de token no Axios
+- Logout automático em erro 401
+- Busca de lugares
+- Limite de buscas para usuários não logados
+- Proteção de rotas (PrivateRoute)
+- UX com mensagens claras de erro e loading
+
+---
+
+## 🚧 Em desenvolvimento
+
+- Refinamento visual (UI/UX)
+- Feedbacks visuais mais ricos
+- Deploy (backend + frontend)
+- Documentação técnica detalhada
+- Testes automatizados
+
+---
+
+## ▶️ Como rodar o projeto localmente
+
+### Backend
+```bash
+cd backend
+npm install
+npm run dev
