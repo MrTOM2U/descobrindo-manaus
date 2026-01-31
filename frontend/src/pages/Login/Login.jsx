@@ -34,30 +34,32 @@ export default function Login() {
   }
 
   return (
-    <div className="login">
-      <h2>Login</h2>
+  <div className="login-container">
+    <form className="login-card" onSubmit={handleSubmit}>
+      <h1>Login</h1>
 
-      <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+      <input
+        type="email"
+        placeholder="Email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        required
+      />
 
-        <input
-          type="password"
-          placeholder="Senha"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+      <input
+        type="password"
+        placeholder="Senha"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        required
+      />
 
-        <button type="submit" disabled={loading}>
-          {loading ? "Entrando..." : "Entrar"}
-        </button>
-      </form>
+      <button type="submit" disabled={loading}>
+        {loading ? "Entrando..." : "Entrar"}
+      </button>
 
       {error && <p className="error">{error}</p>}
-    </div>
-  );
+    </form>
+  </div>
+);
 }

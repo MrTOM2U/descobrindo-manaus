@@ -1,15 +1,7 @@
-import { Routes, Route, Navigate } from "react-router-dom";
-import { useContext } from "react";
-import { AuthContext } from "../contexts/AuthContext";
-
-import Login from "../pages/Login";
-import Home from "../pages/Home";
-
-function PrivateRoute({ children }) {
-  const { isAuthenticated } = useContext(AuthContext);
-
-  return isAuthenticated ? children : <Navigate to="/login" />;
-}
+import { Routes, Route } from "react-router-dom";
+import Login from "../pages/Login/Login";
+import Home from "../pages/Home/Home";
+import PrivateRoute from "./PrivateRoute";
 
 export default function AppRoutes() {
   return (

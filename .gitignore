@@ -12,3 +12,6 @@ build/
 
 # OS
 .DS_Store
+
+# Next.js experimental
+frontend-next/

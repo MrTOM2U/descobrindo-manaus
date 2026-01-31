@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const api = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: "https://descobrindo-manaus.onrender.com",
 });
 
 // Interceptor de request → injeta token
@@ -20,7 +20,6 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response && error.response.status === 401) {
-      alert("Sua sessão expirou. Faça login novamente.");
       localStorage.removeItem("token");
       localStorage.removeItem("user");
       window.location.href = "/login";
@@ -29,4 +28,3 @@ api.interceptors.response.use(
     return Promise.reject(error);
   }
 );
-
